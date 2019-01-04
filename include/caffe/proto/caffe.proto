@@ -374,7 +374,6 @@ message LayerParameter {
   // for their implementation. These layers include an Engine type and
   // engine parameter for selecting the implementation.
   // The default for the engine is set by the ENGINE switch at compile-time.
-  optional MyNeuronParameter my_neuron_param = 150;
   optional AccuracyParameter accuracy_param = 102;
   optional ArgMaxParameter argmax_param = 103;
   optional BatchNormParameter batch_norm_param = 139;
@@ -423,11 +422,6 @@ message LayerParameter {
   optional TileParameter tile_param = 138;
   optional WindowDataParameter window_data_param = 129;
 }
-
-message MyNeuronParameter {
-  optional float power = 1 [default = 2]; //自定义层的新增参数
-}
-
 
 // Message that stores parameters used to apply transformation
 // to the data layer's data
@@ -1305,7 +1299,6 @@ message V1LayerParameter {
     TANH = 23;
     WINDOW_DATA = 24;
     THRESHOLD = 31;
-    MYNEURON = 40;
   }
   optional LayerType type = 5;
   repeated BlobProto blobs = 6;

@@ -34,6 +34,17 @@ layer {
     backend: LMDB
   }
 }
+
+layer {
+  name: "myneuron"
+  type: "MyNeuron"
+  bottom: "data"
+  top: "data"
+  my_neuron_param {
+    power : 2
+  }
+}
+
 layer {
   name: "conv1"
   type: "Convolution"
