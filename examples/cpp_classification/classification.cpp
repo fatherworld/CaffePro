@@ -10,11 +10,13 @@
 #include <string>
 #include <utility>
 #include <vector>
-
+#include<iostream>
+//#define PRINT_MEAN_VALUE SY
 #ifdef USE_OPENCV
+
 using namespace caffe;  // NOLINT(build/namespaces)
 using std::string;
-
+using namespace std;
 /* Pair (label, confidence) representing a prediction. */
 typedef std::pair<string, float> Prediction;
 
@@ -118,6 +120,8 @@ std::vector<Prediction> Classifier::Classify(const cv::Mat& img, int N) {
 
 /* Load the mean file in binaryproto format. */
 void Classifier::SetMean(const string& mean_file) {
+
+  std::cout<<"yeshan log in SetMean"<<std::endl;
   BlobProto blob_proto;
   ReadProtoFromBinaryFileOrDie(mean_file.c_str(), &blob_proto);
 
@@ -128,23 +132,42 @@ void Classifier::SetMean(const string& mean_file) {
     << "Number of channels of mean file doesn't match input layer.";
 
   /* The format of the mean file is planar 32-bit float BGR or grayscale. */
+
+  std::cout<<"predict image channel is "<< num_channels_<<std::endl;
   std::vector<cv::Mat> channels;
   float* data = mean_blob.mutable_cpu_data();
   for (int i = 0; i < num_channels_; ++i) {
     /* Extract an individual channel. */
     cv::Mat channel(mean_blob.height(), mean_blob.width(), CV_32FC1, data);
     channels.push_back(channel);
+    //data malloc pianyi
     data += mean_blob.height() * mean_blob.width();
   }
 
   /* Merge the separate channels into a single image. */
   cv::Mat mean;
   cv::merge(channels, mean);
-
+  std::cout<<"mean cols"<<mean.cols<<std::endl;
+  std::cout<<"mean rows"<<mean.rows<<std::endl;
   /* Compute the global mean pixel value and create a mean image
    * filled with this value. */
   cv::Scalar channel_mean = cv::mean(mean);
+  cout<<"cv::Scalar"<<channel_mean.val[0]<<endl;
   mean_ = cv::Mat(input_geometry_, mean.type(), channel_mean);
+#ifdef PRINT_MEAN_VALUE
+
+  std::cout<<"mean_ rows"<<mean_.rows<<std::endl;
+  std::cout<<"mean_ cols"<<mean_.cols<<std::endl;
+  std::cout<<"mean_ channels"<<mean_.channels()<<std::endl;
+
+  for(int i=0;i< mean_.rows;i++)
+  {
+      for(int j=0;j<mean_.cols;j++)
+      {
+          cout<<mean.at<float>(i,j)<<endl;
+      }
+  }
+#endif
 }
 
 std::vector<float> Classifier::Predict(const cv::Mat& img) {
@@ -227,6 +250,9 @@ void Classifier::Preprocess(const cv::Mat& img,
 }
 
 int main(int argc, char** argv) {
+
+  LOG(INFO)<<"statr classify";
+
   if (argc != 6) {
     std::cerr << "Usage: " << argv[0]
               << " deploy.prototxt network.caffemodel"
@@ -240,6 +266,17 @@ int main(int argc, char** argv) {
   string trained_file = argv[2];
   string mean_file    = argv[3];
   string label_file   = argv[4];
+  /*
+  LOG(INFO)<<"model_file is "<<model_file;
+  LOG(INFO)<<"trained_file is "<<trained_file;
+  LOG(INFO)<<"mean_file is "<<mean_file;
+  LOG(INFO)<<"mean_file is "<<mean_file;
+  */
+  std::cout<<"model_file is "<<model_file<<endl;
+  std::cout<<"trained_file is "<<trained_file;
+  std::cout<<"mean_file is "<<mean_file;
+  std::cout<<"mean_file is "<<mean_file;
+
   Classifier classifier(model_file, trained_file, mean_file, label_file);
 
   string file = argv[5];
