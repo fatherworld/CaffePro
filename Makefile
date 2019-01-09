@@ -186,7 +186,8 @@ USE_LMDB ?= 1
 # This code is taken from https://github.com/sh1r0/caffe-android-lib
 USE_HDF5 ?= 1
 USE_OPENCV ?= 1
-
+USE_FFMPEGS ?= 1
+USE_SDL ?= 1
 ifeq ($(USE_LEVELDB), 1)
 	LIBRARIES += leveldb snappy
 endif
@@ -197,6 +198,16 @@ endif
 ifeq ($(USE_HDF5), 1)
 	LIBRARIES += hdf5_hl hdf5
 endif
+
+ifeq ($(USE_FFMPEGS), 1)
+	LIBRARIES += avcodec avdevice avfilter avformat avutil swresample swscale avdevice
+endif
+
+ifeq ($(USE_SDL), 1)
+	LIBRARIES += SDLmain SDL_ttf SDL_net SDL SDL_image SDL_mixer SDL_sound 
+endif
+
+
 ifeq ($(USE_OPENCV), 1)
 	LIBRARIES += opencv_core opencv_highgui opencv_imgproc
 
@@ -375,7 +386,9 @@ ifeq ($(WITH_PYTHON_LAYER), 1)
 endif
 
 # BLAS configuration (default = ATLAS)
+#?= 是如果没有被赋值过就赋予等号后面的值
 BLAS ?= atlas
+
 ifeq ($(BLAS), mkl)
 	# MKL
 	LIBRARIES += mkl_rt
@@ -392,6 +405,7 @@ else
 		ifeq ($(BLAS), atlas)
 			# Linux simply has cblas and atlas
 			LIBRARIES += cblas atlas
+			
 		endif
 	else ifeq ($(OSX), 1)
 		# OS X packages atlas as the vecLib framework
@@ -411,6 +425,10 @@ else
 		endif
 	endif
 endif
+$(warning,"libraries")
+$(warning,$(LIBRARIES))
+
+
 INCLUDE_DIRS += $(BLAS_INCLUDE)
 LIBRARY_DIRS += $(BLAS_LIB)
 
@@ -436,7 +454,8 @@ endif
 LDFLAGS += $(foreach librarydir,$(LIBRARY_DIRS),-L$(librarydir)) $(PKG_CONFIG) \
 		$(foreach library,$(LIBRARIES),-l$(library))
 PYTHON_LDFLAGS := $(LDFLAGS) $(foreach library,$(PYTHON_LIBRARIES),-l$(library))
-
+$(warning, "here add the debug info")
+$(warning  $(LDFLAGS))
 # 'superclean' target recursively* deletes all files ending with an extension
 # in $(SUPERCLEAN_EXTS) below.  This may be useful if you've built older
 # versions of Caffe that do not place all generated files in a location known
@@ -537,6 +556,8 @@ $(MAT$(PROJECT)_SO): $(MAT$(PROJECT)_SRC) $(STATIC_NAME)
 	@ if [ -f "$(PROJECT)_.d" ]; then \
 		mv -f $(PROJECT)_.d $(BUILD_DIR)/${MAT$(PROJECT)_SO:.$(MAT_SO_EXT)=.d}; \
 	fi
+
+$(warning "print log again")
 
 runtest: $(TEST_ALL_BIN)
 	$(TOOL_BUILD_DIR)/caffe

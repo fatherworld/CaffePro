@@ -11,12 +11,19 @@
 #include <utility>
 #include <vector>
 #include<iostream>
+
 //#define PRINT_MEAN_VALUE SY
 #ifdef USE_OPENCV
-
+#define NEED_PREDIECT YES
+#ifdef NEED_PREDIECT
+#include"caffe/util/play_voice_by_ffmpeg.hpp\"
+using namespace ffmpegs;
+#endif
 using namespace caffe;  // NOLINT(build/namespaces)
 using std::string;
 using namespace std;
+
+
 /* Pair (label, confidence) representing a prediction. */
 typedef std::pair<string, float> Prediction;
 
@@ -253,7 +260,7 @@ int main(int argc, char** argv) {
 
   LOG(INFO)<<"statr classify";
 
-  if (argc != 6) {
+  if (argc != 7) {
     std::cerr << "Usage: " << argv[0]
               << " deploy.prototxt network.caffemodel"
               << " mean.binaryproto labels.txt img.jpg" << std::endl;
@@ -266,6 +273,7 @@ int main(int argc, char** argv) {
   string trained_file = argv[2];
   string mean_file    = argv[3];
   string label_file   = argv[4];
+  string voice_path = argv[6];
   /*
   LOG(INFO)<<"model_file is "<<model_file;
   LOG(INFO)<<"trained_file is "<<trained_file;
@@ -291,9 +299,21 @@ int main(int argc, char** argv) {
   /* Print the top N predictions. */
   for (size_t i = 0; i < predictions.size(); ++i) {
     Prediction p = predictions[i];
+
     std::cout << std::fixed << std::setprecision(4) << p.second << " - \""
               << p.first << "\"" << std::endl;
   }
+
+#ifdef NEED_PREDIECT
+  Prediction temp = predictions[0];
+  if(int(temp.second) == 1)
+  {
+
+      //当该label的概率最大时候，进行语音播报
+      play_voice(voice_path);
+
+  }
+#endif
 }
 #else
 int main(int argc, char** argv) {

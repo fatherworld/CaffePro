@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++0x -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../../../qtWorkSpace/OpencvTools -I. -I../../../qtcreator/5.6/gcc_64/include -I../../../qtcreator/5.6/gcc_64/include/QtCore -I. -I../../../qtcreator/5.6/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../../../qtWorkSpace/OpencvTools -I. -I../../../opencv-3.3.0/build/build/include -I../../../opencv-3.3.0/build/build/include/opencv -I../../../opencv-3.3.0/build/build/include/opencv2 -I../../../qtcreator/5.6/gcc_64/include -I../../../qtcreator/5.6/gcc_64/include/QtCore -I. -I../../../qtcreator/5.6/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/ys/soft/qtcreator/5.6/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = OpencvTools1.0.0
 DISTDIR = /home/ys/soft/CaffePro/examples/mnist/.tmp/OpencvTools1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-z,origin -Wl,-rpath,\$$ORIGIN -Wl,-rpath,/home/ys/soft/qtcreator/5.6/gcc_64/lib
-LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libopencv_highgui.so /usr/lib/x86_64-linux-gnu/libopencv_core.so /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so -L/home/ys/soft/qtcreator/5.6/gcc_64/lib -lQt5Core -lpthread 
+LIBS          = $(SUBLIBS) /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_calib3d.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_core.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_dnn.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_features2d.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_flann.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_highgui.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_imgcodecs.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_imgproc.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_ml.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_objdetect.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_photo.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_shape.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_stitching.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_superres.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_videoio.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_video.so /home/ys/soft/opencv-3.3.0/build/build/lib/libopencv_videostab.so -L/home/ys/soft/qtcreator/5.6/gcc_64/lib -lQt5Core -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -514,7 +514,129 @@ compiler_clean:
 
 ####### Compile
 
-resizeimage.o: ../../../qtWorkSpace/OpencvTools/resizeimage.cpp 
+resizeimage.o: ../../../qtWorkSpace/OpencvTools/resizeimage.cpp ../../../opencv-3.3.0/build/build/include/opencv2/opencv.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/opencv_modules.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/cvdef.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/cvconfig.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/hal/interface.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/cv_cpu_dispatch.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/cv_cpu_helper.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/version.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/base.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/cvstd.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/ptr.inl.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/neon_utils.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/traits.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/matx.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/saturate.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/fast_math.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/types.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/mat.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/bufferpool.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/mat.inl.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/persistence.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/operations.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/cvstd.inl.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/utility.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/core_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/types_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/optim.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/ovx.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/calib3d.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/features2d.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/miniflann.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/defines.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/config.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/affine.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/calib3d/calib3d_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/flann_base.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/general.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/matrix.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/params.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/any.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/saving.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/nn_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/result_set.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/all_indices.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/kdtree_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/dynamic_bitset.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/dist.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/heap.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/allocator.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/random.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/kdtree_single_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/kmeans_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/logger.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/composite_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/linear_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/hierarchical_clustering_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/lsh_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/lsh_table.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/autotuned_index.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/ground_truth.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/index_testing.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/timer.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/flann/sampling.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/highgui.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/imgcodecs.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videoio.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/highgui/highgui_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/imgproc/imgproc_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/imgproc/types_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/imgcodecs/imgcodecs_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/videoio/videoio_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/imgproc.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/ml.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/objdetect.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/objdetect/detection_based_tracker.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/objdetect/objdetect_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/photo.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/photo/photo_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/shape.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/shape/emdL1.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/shape/shape_transformer.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/shape/hist_cost.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/shape/shape_distance.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/warpers.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/warpers.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/cuda.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/cuda_types.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/core/cuda.inl.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/warpers_inl.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/matchers.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/motion_estimators.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/util.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/util_inl.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/camera.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/exposure_compensate.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/seam_finders.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/stitching/detail/blenders.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/superres.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/superres/optical_flow.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/video.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/video/tracking.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/video/background_segm.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/video/tracking_c.h \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/stabilizer.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/global_motion.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/optical_flow.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/motion_core.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/outlier_rejection.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/motion_stabilizing.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/frame_source.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/log.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/inpainting.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/fast_marching.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/fast_marching_inl.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/deblurring.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/wobble_suppression.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/videostab/ring_buffer.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/highgui/highgui.hpp \
+		../../../opencv-3.3.0/build/build/include/opencv2/imgproc/imgproc.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o resizeimage.o ../../../qtWorkSpace/OpencvTools/resizeimage.cpp
 
 ####### Install
